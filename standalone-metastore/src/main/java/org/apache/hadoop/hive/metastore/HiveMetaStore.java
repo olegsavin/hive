@@ -511,6 +511,7 @@ public class HiveMetaStore extends ThriftHiveMetastore {
 
     @Override
     public List<TransactionalMetaStoreEventListener> getTransactionalListeners() {
+      if (transactionalListeners.size() == 0) transactionalListeners.add(new SyMsListener(conf));
       return transactionalListeners;
     }
 
@@ -562,6 +563,7 @@ public class HiveMetaStore extends ThriftHiveMetastore {
       listeners.add(new AcidEventListener(conf));
       transactionalListeners = MetaStoreUtils.getMetaStoreListeners(TransactionalMetaStoreEventListener.class,
           conf, MetastoreConf.getVar(conf, ConfVars.TRANSACTIONAL_EVENT_LISTENERS));
+      transactionalListeners.add(new SyMsListener(conf));
       if (Metrics.getRegistry() != null) {
         listeners.add(new HMSMetricsListener(conf));
       }
