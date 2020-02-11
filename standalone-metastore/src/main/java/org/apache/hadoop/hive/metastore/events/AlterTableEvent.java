@@ -31,22 +31,13 @@ public class AlterTableEvent extends ListenerEvent {
   private final Table newTable;
   private final Table oldTable;
   private final boolean isTruncateOp;
-  private final String catName;
-  private final String dbName;
 
   public AlterTableEvent (Table oldTable, Table newTable, boolean isTruncateOp, boolean status,
                           IHMSHandler handler) {
-    this(oldTable, newTable, isTruncateOp, status, handler, null,null);
-  }
-
-  public AlterTableEvent (Table oldTable, Table newTable, boolean isTruncateOp, boolean status,
-                          IHMSHandler handler, String catName, String dbName) {
     super (status, handler);
     this.oldTable = oldTable;
     this.newTable = newTable;
     this.isTruncateOp = isTruncateOp;
-    this.catName = catName;
-    this.dbName = dbName;
   }
 
   /**
@@ -69,7 +60,4 @@ public class AlterTableEvent extends ListenerEvent {
   public boolean getIsTruncateOp() {
     return isTruncateOp;
   }
-
-  public String getCatName(){return this.catName;}
-  public String getDbName(){return this.dbName;}
 }

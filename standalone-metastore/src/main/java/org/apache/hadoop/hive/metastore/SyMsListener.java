@@ -27,7 +27,8 @@ public class SyMsListener extends TransactionalMetaStoreEventListener {
             long newVer = Long.parseLong(oldParams.get(synapseVerKey)) + 1;
             tbl.putToParameters(synapseVerKey, Long.toString(newVer));
 
-            msdb.alterTable(tableEvent.getCatName(), tableEvent.getDbName(), tableEvent.getNewTable().getTableName(), tbl);
+            Map<String,String> evParams = tableEvent.getParameters();
+            msdb.alterTable(evParams.get("catName"), evParams.get("dbName"), tableEvent.getNewTable().getTableName(), tbl);
         }
         catch (InvalidObjectException e){
             throw new MetaException(

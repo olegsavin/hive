@@ -345,9 +345,12 @@ public class HiveAlterHandler implements AlterHandler {
       }
 
       if (transactionalListeners != null && !transactionalListeners.isEmpty()) {
+        AlterTableEvent ev = new AlterTableEvent(oldt, newt, false, true, handler);
+        ev.putParameter("catName", catName);
+        ev.putParameter("dbName", dbname);
         txnAlterTableEventResponses = MetaStoreListenerNotifier.notifyEvent(transactionalListeners,
                   EventMessage.EventType.ALTER_TABLE,
-                  new AlterTableEvent(oldt, newt, false, true, handler, catName, dbname),
+                  new AlterTableEvent(oldt, newt, false, true, handler),
                   environmentContext);
       }
       // commit the changes
