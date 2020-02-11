@@ -24,7 +24,7 @@ public class SyMsListener extends TransactionalMetaStoreEventListener {
             String synapseVerKey = "synapse.version";
             Map<String, String> oldParams = oldTbl.getParameters();
             if (!oldParams.containsKey(synapseVerKey)) oldParams.put(synapseVerKey, "1");
-            long newVer = Long.parseLong(oldParams.get(oldParams)) + 1;
+            long newVer = Long.parseLong(oldParams.get(synapseVerKey)) + 1;
             tbl.putToParameters(synapseVerKey, Long.toString(newVer));
 
             msdb.alterTable(tableEvent.getCatName(), tableEvent.getDbName(), tableEvent.getNewTable().getTableName(), tbl);
