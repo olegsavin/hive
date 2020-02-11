@@ -349,9 +349,7 @@ public class HiveAlterHandler implements AlterHandler {
         ev.putParameter("catName", catName);
         ev.putParameter("dbName", dbname);
         txnAlterTableEventResponses = MetaStoreListenerNotifier.notifyEvent(transactionalListeners,
-                  EventMessage.EventType.ALTER_TABLE,
-                  new AlterTableEvent(oldt, newt, false, true, handler),
-                  environmentContext);
+                  EventMessage.EventType.ALTER_TABLE, ev, environmentContext);
       }
       // commit the changes
       success = msdb.commitTransaction();
