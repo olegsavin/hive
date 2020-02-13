@@ -511,7 +511,7 @@ public class HiveMetaStore extends ThriftHiveMetastore {
 
     @Override
     public List<TransactionalMetaStoreEventListener> getTransactionalListeners() {
-      if (transactionalListeners.size() == 0) transactionalListeners.add(new SyMsListener(conf));
+      //if (transactionalListeners.size() == 0) transactionalListeners.add(new SyMsListener(conf));
       return transactionalListeners;
     }
 
@@ -563,7 +563,7 @@ public class HiveMetaStore extends ThriftHiveMetastore {
       listeners.add(new AcidEventListener(conf));
       transactionalListeners = MetaStoreUtils.getMetaStoreListeners(TransactionalMetaStoreEventListener.class,
           conf, MetastoreConf.getVar(conf, ConfVars.TRANSACTIONAL_EVENT_LISTENERS));
-      transactionalListeners.add(new SyMsListener(conf));
+      //transactionalListeners.add(new SyMsListener(conf));
       if (Metrics.getRegistry() != null) {
         listeners.add(new HMSMetricsListener(conf));
       }
@@ -1842,33 +1842,33 @@ public class HiveMetaStore extends ThriftHiveMetastore {
               + " already exists");
         }
 
-        if (!TableType.VIRTUAL_VIEW.toString().equals(tbl.getTableType())) {
-          if (tbl.getSd().getLocation() == null
-              || tbl.getSd().getLocation().isEmpty()) {
-            tblPath = wh.getDefaultTablePath(db, tbl);
-          } else {
-            if (!isExternal(tbl) && !MetaStoreUtils.isNonNativeTable(tbl)) {
-              LOG.warn("Location: " + tbl.getSd().getLocation()
-                  + " specified for non-external table:" + tbl.getTableName());
-            }
-            tblPath = wh.getDnsPath(new Path(tbl.getSd().getLocation()));
-          }
-          tbl.getSd().setLocation(tblPath.toString());
-        }
-
-        if (tblPath != null) {
-          if (!wh.isDir(tblPath)) {
-            if (!wh.mkdirs(tblPath)) {
-              throw new MetaException(tblPath
-                  + " is not a directory or unable to create one");
-            }
-            madeDir = true;
-          }
-        }
-        if (MetastoreConf.getBoolVar(conf, ConfVars.STATS_AUTO_GATHER) &&
-            !MetaStoreUtils.isView(tbl)) {
-          MetaStoreUtils.updateTableStatsSlow(db, tbl, wh, madeDir, false, envContext);
-        }
+//        if (!TableType.VIRTUAL_VIEW.toString().equals(tbl.getTableType())) {
+//          if (tbl.getSd().getLocation() == null
+//              || tbl.getSd().getLocation().isEmpty()) {
+//            tblPath = wh.getDefaultTablePath(db, tbl);
+//          } else {
+//            if (!isExternal(tbl) && !MetaStoreUtils.isNonNativeTable(tbl)) {
+//              LOG.warn("Location: " + tbl.getSd().getLocation()
+//                  + " specified for non-external table:" + tbl.getTableName());
+//            }
+//            tblPath = wh.getDnsPath(new Path(tbl.getSd().getLocation()));
+//          }
+//          tbl.getSd().setLocation(tblPath.toString());
+//        }
+//
+//        if (tblPath != null) {
+//          if (!wh.isDir(tblPath)) {
+//            if (!wh.mkdirs(tblPath)) {
+//              throw new MetaException(tblPath
+//                  + " is not a directory or unable to create one");
+//            }
+//            madeDir = true;
+//          }
+//        }
+//        if (MetastoreConf.getBoolVar(conf, ConfVars.STATS_AUTO_GATHER) &&
+//            !MetaStoreUtils.isView(tbl)) {
+//          MetaStoreUtils.updateTableStatsSlow(db, tbl, wh, madeDir, false, envContext);
+//        }
 
         // set create time
         long time = System.currentTimeMillis() / 1000;
