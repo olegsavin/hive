@@ -1260,6 +1260,7 @@ public class HiveMetaStore extends ThriftHiveMetastore {
       Map<String, String> transactionalListenersResponses = Collections.emptyMap();
       try {
         firePreEvent(new PreCreateDatabaseEvent(db, this));
+        LOG.debug("OLEGSA: pre-Creating database path " + dbPath);
 //        if (!wh.isDir(dbPath)) {
 //          LOG.debug("Creating database path " + dbPath);
 //          if (!wh.mkdirs(dbPath)) {
