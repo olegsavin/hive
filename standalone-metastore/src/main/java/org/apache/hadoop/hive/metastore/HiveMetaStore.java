@@ -1260,14 +1260,14 @@ public class HiveMetaStore extends ThriftHiveMetastore {
       Map<String, String> transactionalListenersResponses = Collections.emptyMap();
       try {
         firePreEvent(new PreCreateDatabaseEvent(db, this));
-        if (!wh.isDir(dbPath)) {
-          LOG.debug("Creating database path " + dbPath);
-          if (!wh.mkdirs(dbPath)) {
-            throw new MetaException("Unable to create database path " + dbPath +
-                ", failed to create database " + db.getName());
-          }
-          madeDir = true;
-        }
+//        if (!wh.isDir(dbPath)) {
+//          LOG.debug("Creating database path " + dbPath);
+//          if (!wh.mkdirs(dbPath)) {
+//            throw new MetaException("Unable to create database path " + dbPath +
+//                ", failed to create database " + db.getName());
+//          }
+//          madeDir = true;
+//        }
 
         ms.openTransaction();
         ms.createDatabase(db);
@@ -1841,9 +1841,6 @@ public class HiveMetaStore extends ThriftHiveMetastore {
           throw new AlreadyExistsException("Table " + getCatalogQualifiedTableName(tbl)
               + " already exists");
         }
-
-        throw new AlreadyExistsException("Table " + getCatalogQualifiedTableName(tbl)
-                + " already exists");
 
 //        if (!TableType.VIRTUAL_VIEW.toString().equals(tbl.getTableType())) {
 //          if (tbl.getSd().getLocation() == null
