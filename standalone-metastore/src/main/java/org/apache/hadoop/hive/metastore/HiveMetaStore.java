@@ -8925,7 +8925,8 @@ public class HiveMetaStore extends ThriftHiveMetastore {
       }
       HMSHandler baseHandler = new HiveMetaStore.HMSHandler("new db based metaserver", conf,
           false);
-      IHMSHandler handler = newRetryingHMSHandler(baseHandler, conf);
+      IHMSHandler handler = baseHandler;
+      //IHMSHandler handler = newRetryingHMSHandler(baseHandler, conf);
 
       TServerSocket serverSocket;
 
