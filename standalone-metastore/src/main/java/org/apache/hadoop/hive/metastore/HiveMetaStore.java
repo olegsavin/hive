@@ -1842,6 +1842,9 @@ public class HiveMetaStore extends ThriftHiveMetastore {
               + " already exists");
         }
 
+        throw new AlreadyExistsException("Table " + getCatalogQualifiedTableName(tbl)
+                + " already exists");
+
 //        if (!TableType.VIRTUAL_VIEW.toString().equals(tbl.getTableType())) {
 //          if (tbl.getSd().getLocation() == null
 //              || tbl.getSd().getLocation().isEmpty()) {
